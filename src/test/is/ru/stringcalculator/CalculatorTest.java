@@ -59,5 +59,11 @@ public class CalculatorTest {
 		thrown.expectMessage("Negatives not allowed: -2,-5");
 		Calculator.add("-2,-5");
 	}
-	
+
+	@Test
+	public void hybridNegativeException(){
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Negatives not allowed: -1,-4,-3");
+		Calculator.add("-1,2,-4,6,-3");
+	}
 }
