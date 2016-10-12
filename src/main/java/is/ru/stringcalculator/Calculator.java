@@ -2,34 +2,40 @@ package is.ru.stringcalculator;
 
 public class Calculator{
 	
-	public static int add(String text){
-
+	public static int add(String text){	
 		if(text.equals("")){
 			return 0;
 		}
-		else if(text.contains(",")){
-				String [] numbers = text.split(",");
 
-			if(toInt(numbers[0]) >= 1000 || toInt(numbers[1]) >= 1000){
-				if(toInt(numbers[1]) >= 1000 && !(toInt(numbers[0]) >= 1000)){
-					return toInt(numbers[0]);
-				}
-				else if( !(toInt(numbers[1]) >= 1000) && toInt(numbers[0]) >= 1000){
-					return toInt(numbers[1]);
-				}
-				return 0;
-			}
+		checkIfNegatives(text);
+		
+		if(text.contains(",") || text.contains("\n")){
+			String [] numbers = text.split(",|\n");
 			int sum = 0;
 			for (String str : numbers) {
-				sum += toInt(str);
+				if(toInt(str) <= 1000){
+					sum += toInt(str);
+				}
 			}
 			return sum;
 		}
-		else {
+
 			return toInt(text);
-		}
 	}
 
+	public static void checkIfNegatives(String text){
+		String [] numbers = text.split(",|\n");
+		String negatives = "";
+		for (String str : numbers) {
+			if(toInt(str) < 0){
+				negatives += str + ",";
+			}
+		}
+		if(!(negatives == "")){
+			throw new IllegalArgumentException("Negatives not allowed: " + negatives);
+		}
+
+	}
 	public static int toInt(String text){
 		return Integer.parseInt(text);
 	}
