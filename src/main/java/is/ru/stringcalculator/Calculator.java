@@ -7,6 +7,19 @@ public class Calculator{
 			return 0;
 		}
 
+		if(text.startsWith("//")){
+			int i = text.indexOf("/");
+			i += 2;
+			String deli = text.substring(i,i+1);
+			i++;
+			String newString = text.substring(i);
+			String [] numbers = newString.split("\n|" + deli);
+			int num = 0;
+			for (String str : numbers) {
+				num += toInt(str);
+			}
+			return num;
+		}
 		checkIfNegatives(text);
 		
 		if(text.contains(",") || text.contains("\n")){
